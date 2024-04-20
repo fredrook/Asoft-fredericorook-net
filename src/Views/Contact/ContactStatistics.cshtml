@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Contact Statistics"; 
+}
+
+<h1>@ViewData["Title"]</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Country Code</th>
+            <th>Contact Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CountryCode</td>
+                <td>@item.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
