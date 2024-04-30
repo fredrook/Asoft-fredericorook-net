@@ -1,8 +1,12 @@
-﻿@{
+﻿@model string
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bem Vindo Avaliador</h1>
+    <p>Este é meu README para leitura e entendimento:</p>
+    <div>
+        @Html.Raw(Model.Replace("\n", "<br>"))
+    </div>
 </div>

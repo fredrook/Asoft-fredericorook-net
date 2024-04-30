@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TestAlfasoft")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c61586d388ab54bba4094626e4dad9dda8cb4cfb")]
 [assembly: System.Reflection.AssemblyProductAttribute("TestAlfasoft")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TestAlfasoft")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

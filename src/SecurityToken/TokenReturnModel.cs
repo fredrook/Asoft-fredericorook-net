@@ -1,4 +1,6 @@
-﻿namespace Alfasoft.SecurityToken
+﻿using Alfasoft.Models;
+
+namespace Alfasoft.SecurityToken
 {
     public class TokenReturnModel
     {

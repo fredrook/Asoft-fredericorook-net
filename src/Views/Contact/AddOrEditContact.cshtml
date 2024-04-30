@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Alfasoft.Models.Contact
+@{
+    ViewData["Title"] = "Add or Edit Contact";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="SaveContact">
+    <div class="form-group">
+        <label asp-for="CountryCode">Country</label>
+        <select asp-for="CountryCode" class="form-control" asp-items="ViewBag.Countries"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Number">Number</label>
+        <input asp-for="Number" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+

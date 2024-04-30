@@ -19,6 +19,6 @@ namespace WebApplication2
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-
+        public DbSet<User> Users { get; set; }
     }
 }

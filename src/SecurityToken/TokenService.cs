@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 #endregion
 
-namespace Alfasoft.SecurityToken;
+namespace Alfasoft.SecurityToken
 {
     public static class TokenService
     {

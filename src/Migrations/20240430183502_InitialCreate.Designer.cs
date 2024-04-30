@@ -10,7 +10,7 @@ using WebApplication2;
 namespace Alfasoft.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240420183618_InitialCreate")]
+    [Migration("20240430183502_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -60,11 +60,48 @@ namespace Alfasoft.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("Alfasoft.Models.Person", b =>
+            modelBuilder.Entity("Alfasoft.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Grant_Type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Alfasoft.Models.Person", b =>
+                {
+                    b.HasBaseType("Alfasoft.Models.User");
 
                     b.Property<string>("Avatar")
                         .IsRequired()
@@ -81,9 +118,7 @@ namespace Alfasoft.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Persons");
+                    b.HasDiscriminator().HasValue("Person");
                 });
 
             modelBuilder.Entity("Alfasoft.Models.Contact", b =>

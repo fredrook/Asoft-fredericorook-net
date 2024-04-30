@@ -8,7 +8,7 @@ using WebApplication2.Controllers;
 using WebApplication2.Models;
 #endregion
 
-public class PeopleControllerTests
+public class Tests
 {
     [Fact]
     public void Privacy_ReturnsViewResult()

@@ -1,4 +1,4 @@
-﻿namespace Alfasoft.SecurityToken;
+﻿namespace Alfasoft.SecurityToken
 {
     public class User
     {

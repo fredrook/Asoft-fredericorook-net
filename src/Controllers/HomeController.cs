@@ -1,4 +1,5 @@
 ﻿#region IMPORTS
+using Alfasoft.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication2.Models;
@@ -18,9 +19,9 @@ namespace WebApplication2.Controllers
 
         public IActionResult Index()
         {
-
-            return Json(_dbContext.Customers);
-
+            // Carregue o conteúdo do README.md aqui
+            var readmeContent = System.IO.File.ReadAllText("C:\\Users\\Frederico\\Downloads\\fredericorook-net\\src\\README.MD");
+            return View(model: readmeContent);
         }
 
         public IActionResult Privacy()
@@ -35,3 +36,5 @@ namespace WebApplication2.Controllers
         }
     }
 }
+
+//C: \Users\Frederico\Downloads\fredericorook-net\src\README.MD

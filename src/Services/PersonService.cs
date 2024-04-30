@@ -1,31 +1,30 @@
 ﻿#region IMPORTS
+using Alfasoft.Interface;
 using Alfasoft.Models;
 using Microsoft.EntityFrameworkCore;
 using WebApplication2;
+using static Alfasoft.Services.PersonService;
 #endregion
 
 namespace Alfasoft.Services
 {
-    public class PersonService
+    public class PersonService : IPersonService
     {
         private readonly ApplicationDbContext _context;
         private readonly CountriesService _countriesService;
+        private readonly IAvatarService _avatarService;
 
-        public PersonService(ApplicationDbContext context, CountriesService countriesService)
+
+        public PersonService(ApplicationDbContext context, CountriesService countriesService, IAvatarService avatarService)
         {
             _context = context;
             _countriesService = countriesService;
+            _avatarService = avatarService;
         }
 
         public async Task<List<Person>> GetAllPeopleAsync()
         {
-            return await _context.Persons.Include(p => p.Contacts).ToListAsync();
-        }
-
-        public async Task<Person> GetPersonByIdAsync(int id)
-        {
-            return await _context.Persons.Include(p => p.Contacts)
-                                         .FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Persons.Where(p => !p.IsDeleted).Include(p => p.Contacts).ToListAsync();
         }
 
         public async Task DeletePersonAsync(int id)
@@ -38,9 +37,12 @@ namespace Alfasoft.Services
             }
         }
 
-        internal Task<string?> GetPersonByIdAsync(object value)
+        public async Task<Person> GetPersonByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Persons
+                .Where(p => !p.IsDeleted)
+                .Include(p => p.Contacts)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task SoftDeletePersonAsync(int id)
@@ -53,29 +55,20 @@ namespace Alfasoft.Services
             }
         }
 
-        public class AvatarService
-        {
-            private static readonly HttpClient _httpClient = new HttpClient();
-            public async Task<string> GetRandomAvatarUrl()
-            {
-                var response = await _httpClient.GetAsync("https://app.pixelencounter.com/api/basic/monsters/random/png");
-                if (response.IsSuccessStatusCode)
-                {
-                    var avatarUrl = response.Headers.Location.ToString();
-                    return avatarUrl;
-                }
-                return null;
-            }
-        }
-
         public async Task AddOrUpdatePersonAsync(Person person)
         {
+            var existingPerson = await _context.Persons
+                .Where(p => p.Email == person.Email && p.Id != person.Id)
+                .FirstOrDefaultAsync();
+
+            if (existingPerson != null)
+            {
+                throw new InvalidOperationException("Another person with the same email already exists.");
+            }
+
             if (person.Id == 0)
             {
-                if (string.IsNullOrEmpty(person.Avatar))
-                {
-                    person.Avatar = await new AvatarService().GetRandomAvatarUrl();
-                }
+                person.Avatar = await _avatarService.GetRandomAvatarUrl();
                 _context.Persons.Add(person);
             }
             else

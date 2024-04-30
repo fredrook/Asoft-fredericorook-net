@@ -21,7 +21,7 @@ namespace Alfasoft.Controllers
                 .Select(group => new { CountryCode = group.Key, Count = group.Count() })
                 .ToList();
 
-            return View(contactsByCountry);
+            return View("~/Views/Contact/ContactStatistics.cshtml", contactsByCountry);
         }
     }
 }
